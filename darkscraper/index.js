@@ -15,9 +15,9 @@ const { URLSearchParams } = require("url"),
  * Get the forecast of a coordinate pair.
  * @param {number} latitude
  * @param {number} longitude
- * @param {string} unit What unit system you want to use. See lib.CONSTANTS.UNIT_CODES for more details.
- * @param {string} lang What language you want your forecast to be in. See lib.CONSTANTS.LANGUAGE_CODES for more details.
- * @param {number} timeFormat What time format you want your forecast in. Either 12-or-24-hour format.
+ * @param {string} [unit=si] What unit system you want to use. See lib.CONSTANTS.UNIT_CODES for more details.
+ * @param {string} [lang=en] What language you want your forecast to be in. See lib.CONSTANTS.LANGUAGE_CODES for more details.
+ * @param {number} [timeFormat=24] What time format you want your forecast in. Either 12-or-24-hour format.
  * @returns {object} An object containing forecast info.
  * @async
  */
@@ -46,12 +46,12 @@ module.exports.forecast = async function(latitude, longitude, unit = 'si', lang 
 
 /**
  * Get detailed info on the weather of a coordinate pair on a specific day.
- * @param {string|Date} date 
+ * @param {string|Date} date If you're using a string, the format is `yyyy-mm-dd`.
  * @param {number} latitude 
  * @param {number} longitude 
- * @param {string} unit What unit system you want to use. See lib.CONSTANTS.UNIT_CODES for more details.
- * @param {string} lang What language you want your forecast to be in. See lib.CONSTANTS.LANGUAGE_CODES for more details.
- * @param {number} timeFormat What time format you want your forecast in. Either 12-or-24-hour format.
+ * @param {string} [unit=si] What unit system you want to use. See lib.CONSTANTS.UNIT_CODES for more details.
+ * @param {string} [lang=en] What language you want your forecast to be in. See lib.CONSTANTS.LANGUAGE_CODES for more details.
+ * @param {number} [timeFormat=24] What time format you want your forecast in. Either 12-or-24-hour format.
  * @returns {object} An object containing detailed info info.
  * @async
  */
@@ -63,8 +63,10 @@ module.exports.details = async function(date, latitude, longitude, unit = 'si', 
     if (!TIME_FORMATS.includes(timeFormat))
         throw Error("Not a valid time format. Either use the 12 or 24-hour format.");
 
-        let url = DARK_SKY_DOMAIN;
-    url.pathname = `/details/${latitude},${longitude}/${date}/${unit}${timeFormat}/${lang}`;
+    let formattedDate = typeof date == "Date" ? `${date.getFullYear()}-${date.getMonth}-${date.getDate()}` : date
+
+    let url = DARK_SKY_DOMAIN;
+    url.pathname = `/details/${latitude},${longitude}/${formattedDate}/${unit}${timeFormat}/${lang}`;
     let res = await fetch(url),
         $ = cheerio.load(await res.text()),
         script = $("script").eq(-2).html(),
@@ -81,16 +83,9 @@ module.exports.details = async function(date, latitude, longitude, unit = 'si', 
 /**
  * Get search results for a place.
  * @param {string} query
- * @returns {{
- *  displayLines: string[],
- *  coordinate: {latitude: number, longitude: number},
- *  _completionUrl: string,
- * urls: Array,
- * administrativeArea: string,
- * administrativeAreaCode: string,
- * locality: string
- * }[]} An array with search result objects.
+ * @returns {object}  An array with search result objects.
  */
+// {{displayLines: string[], coordinate: {latitude: number, longitude: number}, _completionUrl: string, urls: Array, administrativeArea: string, administrativeAreaCode: string, locality: string}[]}
 module.exports.autocomplete = async function(query) {
     let url = DARK_SKY_DOMAIN;
     url.pathname = "/autocomplete";
@@ -103,7 +98,7 @@ module.exports.autocomplete = async function(query) {
  * Convert coordinates to the name of a place.
  * @param {number} latitude 
  * @param {number} longitude 
- * @param {number} hires Actually have no idea what this does.
+ * @param {number} [hires=1] Actually have no idea what this does.
  * @returns {{name: string, street: string}} Name for the coordinates.
  */
 module.exports.rgeo = async function(latitude, longitude, hires = 1) {
