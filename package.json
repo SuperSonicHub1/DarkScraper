@@ -1,0 +1,24 @@
+{
+  "name": "DarkScraper",
+  "version": "1.0.0",
+  "description": "Quickly scrape Dark Sky. Powered by Node Fetch and Cheerio.",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [
+    "dark sky",
+    "web-scraping",
+    "scraping"
+  ],
+  "author": {
+    "name": "Kyle Williams",
+    "email": "kyle.anthony.williams2@gmail.com",
+    "url": "https://supersonicspy1.github.io"
+  },
+  "license": "Unlicense",
+  "dependencies": {
+    "cheerio": "^1.0.0-rc.3",
+    "node-fetch": "^2.6.1"
+  }
+}

@@ -1,0 +1,1 @@
+module.exports = obj => Function(`"use strict";return (${obj})`)()
