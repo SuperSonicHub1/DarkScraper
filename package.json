@@ -5,7 +5,7 @@
   "main": "index.js",
   "scripts": {
     "test": "node tests/index.js",
-    "docs": "jsdoc2md index.js > ../API.md"
+    "docs": "jsdoc2md index.js > API.md"
   },
   "keywords": [
     "dark sky",
