@@ -1,5 +1,5 @@
 {
-  "name": "darkscraper",
+  "name": "@supersonichub1/darkscraper",
   "version": "1.0.0",
   "description": "Quickly scrape Dark Sky. Powered by Node Fetch and Cheerio.",
   "main": "index.js",
