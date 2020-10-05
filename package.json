@@ -12,6 +12,7 @@
     "web-scraping",
     "scraping"
   ],
+  "publishConfig": { "registry": "https://npm.pkg.github.com/" },
   "author": {
     "name": "Kyle Williams",
     "email": "kyle.anthony.williams2@gmail.com",
