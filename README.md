@@ -1,4 +1,7 @@
 # DarkScraper
+
+[Dark Sky is dead.](https://blog.darksky.net/dark-sky-has-a-new-home/) Only a fool would continue using this thing. 
+
 Quickly scrape [Dark Sky](https://darksky.net). Powered by [Node Fetch](https://github.com/node-fetch/node-fetch) and [Cheerio](https://github.com/cheeriojs/cheerio).
 
 ```javascript
